@@ -11,3 +11,6 @@ git remote add origin git@github.com:Amankaium/kgtube.git
 git push -u origin main
 
 # КАК ЗАЛИВАТЬ ИЗМЕНЕНИЯ?
+git add .
+git commit -m "some text"
+git push
