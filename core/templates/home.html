@@ -1,24 +1,7 @@
-<!DOCTYPE html>
-{% load static %}
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link
-        rel="stylesheet"
-        href="{% static 'main.css' %}">
-</head>
-<body>
-    <nav>
-        <a href="/">Домой</a> |
-        <a href="/videos/">Список видео</a> |
-        <a href="/admin">Админ панель</a> |
-        <a href="/about/">О нас</a> |
-        <a href="/playlists/">Плейлисты</a>
-    </nav>
-    <div>
-        Hello from templates
-    </div>
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% block content %}
+<div>
+    Hello from templates
+</div>
+{% endblock %}
