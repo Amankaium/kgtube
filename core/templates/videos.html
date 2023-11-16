@@ -1,12 +1,17 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>Все видео</h1>
-    {% for video in videos_list %}
-        <div>
-            <a href="/video/{{ video.id }}/">
-                {{ video.name }}
-            </a>
-        </div>
-    {% endfor %}
+    <div class="row">
+        {% for video in videos_list  %}
+            <div class="col-lg-4 col-md-6 col-sm-12">
+                <a href="/video/{{ video.id }}/">
+                    <video width="95%">
+                        <source src="{{ video.file_path.url }}">
+                    </video>
+                    <div>{{ video.name }}</div>
+                    <span>Лайков: {{ video.likes }}</span> 
+                </a>
+            </div>
+        {% endfor %}
+    </div>
 {% endblock %}
