@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
     <div class="row">
@@ -8,8 +9,8 @@
                     <video width="95%">
                         <source src="{{ video.file_path.url }}">
                     </video>
-                    <div>{{ video.name }}</div>
-                    <span>Лайков: {{ video.likes }}</span> 
+                    <h3>{{ video.name }}</h3>
+                    <span><img height="20px" src="{% static 'like.svg' %}" alt=""> {{ video.likes }}</span> 
                 </a>
             </div>
         {% endfor %}
