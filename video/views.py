@@ -39,3 +39,8 @@ def video_update(request, id):
         return redirect(video, id=video_object.id)
 
     return render(request, 'video_update.html', context)
+
+def video_delete(request, id):
+    video_object = Video.objects.get(id=id)
+    video_object.delete()
+    return redirect(videos)
