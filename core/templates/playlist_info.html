@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>{{ playlist_object.name }}</h1>
+    <h2>Просмотры: {{ playlist_object.views_qty }}</h2>
+    <h2>Количество видео: {{ playlist_object.videos_qty }}</h2>
+    <div>
+        {{ playlist_object.description }}
+    </div>
+{% endblock %}

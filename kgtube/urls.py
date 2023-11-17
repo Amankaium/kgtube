@@ -16,10 +16,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from core.views import homepage, about_view
-from playlist.views import playlists
+from core.views import homepage, about_view, search
+from playlist.views import playlists, playlist_add, playlist_info
 # from playlist import views
-from video.views import videos, video, video_add
+from video.views import *
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -29,9 +29,13 @@ urlpatterns = [
     path('about/', about_view),
     path('playlists/', playlists),
     # path('playlists/', views.playlists),
+    path('playlist/<int:id>/', playlist_info, name='playlist-info'),
+    path('playlist/add/', playlist_add, name='playlist-add'),
     path('videos/', videos),
     path('video/<int:id>/', video),
-    path('video-add/', video_add, name='video-add')
+    path('video-update/<int:id>/', video_update, name='video-update'),
+    path('video-add/', video_add, name='video-add'),
+    path('search/', search, name='search'), # from core.views import search
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

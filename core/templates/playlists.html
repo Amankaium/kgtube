@@ -3,6 +3,10 @@
 {% block content %}
     <h2>Все плейлисты</h2>
     {% for object in objects_list %}
-        <div>{{ object.name }}</div>
+        <div>
+            <a href="{% url 'playlist-info' object.id %}">
+                {{ object.name }}
+            </a>
+        </div>
     {% endfor %}
 {% endblock %}

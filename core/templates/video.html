@@ -3,6 +3,9 @@
 {% block content %}
     <h1>{{ video.name }}</h1>
     <h2>Лайков: {{ video.likes }}</h2>
-    <video width="500" controls src="{{ video.file_path.url }}">
-    </video>
+    <p>
+        <video width="500" controls src="{{ video.file_path.url }}">
+        </video>
+    </p>
+    <a href="{% url 'video-update' video.id %}" class="btn btn-warning">Изменить</a>
 {% endblock %}

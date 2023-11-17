@@ -27,4 +27,15 @@ def video_add(request):
         # INSERT INTO ...
         video_object.save()
         return redirect(video, id=video_object.id)
-        
+
+def video_update(request, id):
+    video_object = Video.objects.get(id=id)
+    context = {"video": video_object}
+
+    if request.method == "POST":
+        name = request.POST["video_name"]
+        video_object.name = name
+        video_object.save()
+        return redirect(video, id=video_object.id)
+
+    return render(request, 'video_update.html', context)
