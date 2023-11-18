@@ -16,8 +16,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from core.views import homepage, about_view, search
-from playlist.views import playlists, playlist_add, playlist_info
+from core.views import *
+from playlist.views import *
 # from playlist import views
 from video.views import *
 from django.conf import settings
@@ -31,6 +31,7 @@ urlpatterns = [
     # path('playlists/', views.playlists),
     path('playlist/<int:id>/', playlist_info, name='playlist-info'),
     path('playlist/add/', playlist_add, name='playlist-add'),
+    path('playlist-df/add/', playlist_df_add, name='playlist-df-add'),
     path('videos/', videos),
     path('video/<int:id>/', video),
     path('video-update/<int:id>/', video_update, name='video-update'),
