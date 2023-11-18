@@ -1,4 +1,6 @@
 from django.db import models
+from django.contrib.auth.models import User
+from playlist.models import UserPlayList
 
 # Create your models here.
 class Video(models.Model):
@@ -6,8 +8,29 @@ class Video(models.Model):
     name = models.CharField(max_length=60) # varchar
     likes = models.IntegerField(default=0) # int
     description = models.TextField(null=True) # text # blank = False
-    is_published = models.BooleanField(default=True) # boolean 
+    is_published = models.BooleanField(default=True) # boolean
+    playlist = models.ForeignKey(
+        to=UserPlayList,
+        on_delete=models.SET_NULL,
+        null=True, blank=True
+    )
 
     def __str__(self):
         return self.name
-    
+
+
+class Comment(models.Model):
+    txt = models.TextField(verbose_name="Текст комментария")
+    video = models.ForeignKey(
+        to=Video,
+        on_delete=models.CASCADE
+    )
+    user = models.ForeignKey(
+        to=User,
+        on_delete=models.CASCADE
+    )
+    created_by = models.DateTimeField(auto_now_add=True)
+    updated_by = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.txt[:10]
