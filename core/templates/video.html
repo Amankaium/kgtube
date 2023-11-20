@@ -1,4 +1,6 @@
 {% extends 'base.html' %}
+{% load django_bootstrap5 %}
+
 
 {% block content %}
     <h1>{{ video.name }}</h1>
@@ -11,9 +13,27 @@
     <a href="{% url 'video-delete' video.id %}" class="btn btn-danger">Удалить</a>
     <hr>
     <h2>Комментарии</h2>
+    <p>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% bootstrap_form comment_form %}
+            {% if comment_form.errors %}
+                <div class="alert alert-danger">
+                    {{ comment_form.errors }}
+                </div>
+            {% endif %}
+            <button type="submit" class="btn btn-primary">Добавить комментарий</button>
+        </form>
+    </p>
     {% for comment in video.comment_set.all %}
-        <p>
-            {{ comment.txt }}
-        </p>
+        <div class="card mb-3">
+            <div class="card-header">
+                <span class="font-weight-bold">{{ comment.user.username }}</span>
+                <span class="text-muted">{{ comment.created_by|date:"F d, Y H:i" }}</span>
+            </div>
+            <div class="card-body">
+                <p class="card-text">{{ comment.txt }}</p>
+            </div>
+        </div>
     {% endfor %}
 {% endblock %}
