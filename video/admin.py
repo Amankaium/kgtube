@@ -3,4 +3,5 @@ from .models import *
 
 
 admin.site.register(Video)
+admin.site.register(VideoView)
 admin.site.register(Comment)

@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from .models import Video
+from .models import *
 from .forms import CommentForm
 
 
@@ -13,6 +13,13 @@ def video(request, id):
     # 7
     # SELECT * FROM video_video WHERE id = 7;
     video_object = Video.objects.get(id=id)
+
+    if request.user.is_authenticated:
+        video_view, created = VideoView.objects.get_or_create(
+            user=request.user,
+            video=video_object,
+        )
+
     context = {}
 
     if request.method == 'POST':

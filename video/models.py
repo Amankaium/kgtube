@@ -34,3 +34,20 @@ class Comment(models.Model):
 
     def __str__(self):
         return self.txt[:10]
+
+
+class VideoView(models.Model):
+    video = models.ForeignKey(
+        to=Video,
+        on_delete=models.CASCADE,
+    )
+    user = models.ForeignKey(
+        to=User,
+        on_delete=models.CASCADE
+    )
+    created_by = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = "Просмотр"
+        verbose_name_plural = "Просмотры"
+        unique_together = [["video", "user"]]
