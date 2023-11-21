@@ -1,4 +1,4 @@
-from django.shortcuts import render, HttpResponse
+from django.shortcuts import render, HttpResponse, redirect
 from django.contrib import messages
 from video.models import Video
 from .models import Profile
@@ -30,16 +30,30 @@ def profile_detail(request, id):
 def profile_update(request, id):
     context = {}
     profile_object = Profile.objects.get(id=id)
+    if request.user == profile_object.user:
+        if request.method == "POST":
+            profile_form = ProfileForm(
+                instance=profile_object,
+                data=request.POST
+            )
+            if profile_form.is_valid():
+                profile_form.save()
+                messages.success(request, "Профиль успешно обновлён!")
+                return redirect(profile_detail, id=profile_object.id)
 
-    if request.method == "POST":
-        profile_form = ProfileForm(
-            instance=profile_object,
-            data=request.POST
-        )
-        if profile_form.is_valid():
-            profile_form.save()
-            messages.success(request, "Профиль успешно обновлён!")
+        profile_form = ProfileForm(instance=profile_object)
+        context["profile_form"] = profile_form
+        return render(request, "profile_update.html", context)
+    else:
+        return HttpResponse("Нет доступа")
 
-    profile_form = ProfileForm(instance=profile_object)
-    context["profile_form"] = profile_form
-    return render(request, "profile_update.html", context)
+def profile_delete(request, id):
+    profile_object = Profile.objects.get(id=id)
+    if request.user == profile_object.user:
+        context = {"profile_object": profile_object}
+        if request.method == "POST":
+            profile_object.delete()
+            return redirect(homepage)
+        return render(request, "profile_delete.html", context)
+    else:
+        return HttpResponse("Нет доступа")

@@ -14,6 +14,12 @@ class Video(models.Model):
         on_delete=models.SET_NULL,
         null=True, blank=True
     )
+    author = models.ForeignKey(
+        to=User,
+        on_delete=models.CASCADE,
+        null=True,
+        blank=False
+    )
 
     def __str__(self):
         return self.name

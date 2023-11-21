@@ -4,8 +4,15 @@
 
 {% block content %}
     <h1>{{ video.name }}</h1>
-    <h2>Лайков: {{ video.likes }}</h2>
-    <h2>Просмотры: {{ video.videoview_set.count }}</h2>
+    {% if video.author %}
+        <h2>Автор:
+            <a href="{% url 'profile-detail' video.author.profile.id %}">
+                {{ video.author.username }}
+            </a>
+        </h2>
+    {% endif %}
+    <h3>Лайков: {{ video.likes }}</h2>
+    <h3>Просмотры: {{ video.videoview_set.count }}</h2>
     <h3>Просмотрено пользователями:</h3>
     {% for view in video.videoview_set.all %}
         <div> 

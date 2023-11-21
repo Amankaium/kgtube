@@ -49,6 +49,7 @@ def video_add(request):
         video_object = Video(
             name=name,
             file_path=video_file,
+            author=request.user
         )
         # video_object.description = "hello world"
         # INSERT INTO ...
