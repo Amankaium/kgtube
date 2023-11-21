@@ -13,6 +13,7 @@ def video(request, id):
     # 7
     # SELECT * FROM video_video WHERE id = 7;
     video_object = Video.objects.get(id=id)
+    context = {}
 
     if request.user.is_authenticated:
         video_view, created = VideoView.objects.get_or_create(
@@ -20,19 +21,17 @@ def video(request, id):
             video=video_object,
         )
 
-    context = {}
-
-    if request.method == 'POST':
-        comment_form = CommentForm(request.POST)
-        if comment_form.is_valid():
-            comment = comment_form.save(commit=False) # ещё нет записи в БД
-            comment.user = request.user
-            comment.video = video_object
-            comment.save() # сохраняем в БД
-            messages.success(request, 'Комментарий успешно добавлен.')
-            return redirect(video, id=video_object.id)
-        else:
-            messages.error(request, 'Ошибка! Данные не валидны')
+        if request.method == 'POST':
+            comment_form = CommentForm(request.POST)
+            if comment_form.is_valid():
+                comment = comment_form.save(commit=False) # ещё нет записи в БД
+                comment.user = request.user
+                comment.video = video_object
+                comment.save() # сохраняем в БД
+                messages.success(request, 'Комментарий успешно добавлен.')
+                return redirect(video, id=video_object.id)
+            else:
+                messages.error(request, 'Ошибка! Данные не валидны')
 
     context = {
         "video": video_object,
