@@ -1,6 +1,8 @@
 from django.shortcuts import render, HttpResponse
+from django.contrib import messages
 from video.models import Video
 from .models import Profile
+from .forms import ProfileForm
 
 # Create your views here.
 def homepage(request):
@@ -24,3 +26,20 @@ def profile_detail(request, id):
         'profile.html',
         {"profile_object": profile_object}
     )
+
+def profile_update(request, id):
+    context = {}
+    profile_object = Profile.objects.get(id=id)
+
+    if request.method == "POST":
+        profile_form = ProfileForm(
+            instance=profile_object,
+            data=request.POST
+        )
+        if profile_form.is_valid():
+            profile_form.save()
+            messages.success(request, "Профиль успешно обновлён!")
+
+    profile_form = ProfileForm(instance=profile_object)
+    context["profile_form"] = profile_form
+    return render(request, "profile_update.html", context)

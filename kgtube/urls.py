@@ -39,6 +39,7 @@ urlpatterns = [
     path('video-add/', video_add, name='video-add'),
     path('search/', search, name='search'), # from core.views import search
     path('profile/<int:id>/', profile_detail, name='profile-detail'),
+    path('profile-update/<int:id>/', profile_update, name='profile-update'),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

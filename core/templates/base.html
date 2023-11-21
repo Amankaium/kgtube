@@ -25,7 +25,7 @@
         <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar" aria-expanded="false">
           <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="navbar-collapse collapse" id="mynavbar" style="">
+        <div class="navbar-collapse collapse" id="mynavbar">
           <ul class="navbar-nav me-auto">
             <li class="nav-item">
               <a class="nav-link"href="/">Домой</a>
@@ -39,15 +39,14 @@
             <li class="nav-item">
               <a class="nav-link" href="/playlists/">Плейлисты</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'video-add' %}">Добавить видео</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'playlist-add' %}">Добавить плейлист</a>
-            </li>
             {% if request.user.is_authenticated %}
-              <li class="nav-item">
-                <a class="nav-link" href="{% url 'playlist-df-add' %}">Добавить плейлист (df)</a>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Добавить</a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="{% url 'playlist-add' %}">Добавить плейлист</a></li>
+                  <li><a class="dropdown-item" href="{% url 'video-add' %}">Добавить видео</a></li>
+                  <li><a class="dropdown-item" href="{% url 'playlist-df-add' %}">Добавить плейлист (df)</a></li>
+                </ul>
               </li>
               {% if request.user.profile %}
                 <li class="nav-item">
@@ -56,10 +55,13 @@
               {% endif %}
             {% endif %}
           </ul>
-          <form class="d-flex" action="/search/">
+          <form class="d-flex mx-1" action="/search/">
             <input class="form-control me-2" type="text" name="key_word" placeholder="Введите">
             <button class="btn btn-dark">Поиск</button>
           </form>
+          <div>
+            <img src="{{ request.user.profile.photo.url }}" height="50px" alt="">
+          </div>
         </div>
       </div>
     </nav>
