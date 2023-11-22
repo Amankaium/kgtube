@@ -1,4 +1,5 @@
 from django.shortcuts import render, HttpResponse, redirect
+from django.contrib.auth.models import User
 from django.contrib import messages
 from video.models import Video
 from .models import Profile
@@ -44,11 +45,24 @@ def profile_create(request):
     )
 
 def profile_detail(request, id):
+    context = {}
     profile_object = Profile.objects.get(id=id)
+    context["profile_object"] = profile_object
+
+    # subscribers_qty = profile_object.subscribers.count()
+    subscribers_qty = User.objects.filter(subscriptions=profile_object).count()
+    context["subscribers_qty"] = subscribers_qty
+
+    # [video_1, video_2, ...] видео этого пользователя
+    videos_list = profile_object.user.video_set.all()
+    # videos_list = Video.objects.filter(author=profile_object.user)
+    context["videos_list"] = videos_list 
+
+
     return render(
         request,
         'profile.html',
-        {"profile_object": profile_object}
+        context
     )
 
 def profile_update(request, id):
@@ -73,9 +87,11 @@ def profile_update(request, id):
         return HttpResponse("Нет доступа")
 
 def profile_delete(request, id):
-    profile_object = Profile.objects.get(id=id)
+    context = {}
     if request.user == profile_object.user:
-        context = {"profile_object": profile_object}
+        profile_object = Profile.objects.get(id=id)
+        context["profile_object"] = profile_object
+
         if request.method == "POST":
             profile_object.delete()
             return redirect(homepage)

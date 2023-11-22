@@ -4,6 +4,7 @@
 {% block content %}
     <div>
         <img src="{{ profile_object.photo.url }}" alt="" height="250px">
+        <h3>Подписчиков: {{ subscribers_qty }}</h3>
         <h3>Название канала: {{ profile_object.channel_name }}</h3>
     </div>
     {% if request.user == profile_object.user %}
@@ -12,7 +13,7 @@
     {% endif %}
     <h3>Видео этого канала:</h3>
     <div class="row">
-        {% for video in profile_object.user.video_set.all %}
+        {% for video in videos_list %}
             <div class="col-lg-4 col-md-6 col-sm-12">
                 <a href="/video/{{ video.id }}/">
                     <video width="95%">

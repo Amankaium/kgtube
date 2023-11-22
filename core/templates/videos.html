@@ -10,7 +10,7 @@
                         <source src="{{ video.file_path.url }}">
                     </video>
                     <h3>{{ video.name }}</h3>
-                    {% if video.author %}
+                    {% if video.author and video.author.profile %}
                         <h4>
                             <a href="/profile/{{ video.author.profile.id }}/">
                                 {{ video.author.username }}
