@@ -3,7 +3,7 @@
 {% block content %}
 
     <div>
-        <img src="{{ profile_object.photo.url }}" alt="">
+        <img src="{{ profile_object.photo.url }}" alt="" height="250px">
         <h3>Название канала: {{ profile_object.channel_name }}</h3>
     </div>
     {% if request.user == profile_object.user %}

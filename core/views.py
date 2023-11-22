@@ -19,6 +19,30 @@ def search(request):
     context = {"videos_list": videos_query}
     return render(request, "videos.html", context)
 
+def profile_create(request):
+    context = {}
+    if request.method == "POST":
+        profile_form = ProfileForm(
+            data=request.POST,
+            files=request.FILES
+        )
+        if profile_form.is_valid():
+            profile_object = profile_form.save(commit=False)
+            profile_object.user = request.user
+            profile_object.save()
+            messages.success(request, "Профиль и канал успешно созданы")
+            return redirect(f'/profile/{profile_object.id}/')
+        else:
+            messages.error(request, "Ошибка при создании профиля")
+
+    profile_form = ProfileForm()
+    context["profile_form"] = profile_form
+    return render(
+        request=request,
+        template_name="profile_create.html",
+        context=context
+    )
+
 def profile_detail(request, id):
     profile_object = Profile.objects.get(id=id)
     return render(
@@ -34,7 +58,8 @@ def profile_update(request, id):
         if request.method == "POST":
             profile_form = ProfileForm(
                 instance=profile_object,
-                data=request.POST
+                data=request.POST,
+                files=request.FILES,
             )
             if profile_form.is_valid():
                 profile_form.save()

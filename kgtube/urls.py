@@ -38,6 +38,7 @@ urlpatterns = [
     path('video-delete/<int:id>/', video_delete, name='video-delete'),
     path('video-add/', video_add, name='video-add'),
     path('search/', search, name='search'), # from core.views import search
+    path('profile-create/', profile_create, name='profile-create'),
     path('profile/<int:id>/', profile_detail, name='profile-detail'),
     path('profile-update/<int:id>/', profile_update, name='profile-update'),
     path('profile-delete/<int:id>/', profile_delete, name='profile-delete'),

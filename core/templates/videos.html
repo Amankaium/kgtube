@@ -10,6 +10,13 @@
                         <source src="{{ video.file_path.url }}">
                     </video>
                     <h3>{{ video.name }}</h3>
+                    {% if video.author %}
+                        <h4>
+                            <a href="/profile/{{ video.author.profile.id }}/">
+                                {{ video.author.username }}
+                            </a>
+                        </h4>
+                    {% endif %}
                     <span><img height="20px" src="{% static 'like.svg' %}" alt=""> {{ video.likes }}</span> 
                 </a>
             </div>
