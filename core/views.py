@@ -1,6 +1,7 @@
 from django.shortcuts import render, HttpResponse, redirect
 from django.contrib.auth.models import User
 from django.contrib import messages
+from django.db.models import Q
 from video.models import Video
 from .models import Profile
 from .forms import ProfileForm
@@ -16,7 +17,14 @@ def about_view(request):
 def search(request):
     key_word = request.GET["key_word"]
     # SELECT * FROM Video WHERE name LIKE '%key_word%'
-    videos_query = Video.objects.filter(name__contains=key_word)
+    # videos_query = Video.objects.filter(name__contains=key_word)
+    # videos_query = Video.objects.filter(description__contains=key_word)
+    videos_query = Video.objects.filter(
+        Q(name__contains=key_word) |
+        Q(author__username__contains=key_word) |
+        Q(description__contains=key_word),
+        is_published=True
+    )
     context = {"videos_list": videos_query}
     return render(request, "videos.html", context)
 
