@@ -14,3 +14,9 @@ git push -u origin main
 git add .
 git commit -m "some text"
 git push
+
+# как клонировать проект?
+git clone https://github.com/jaka00/kgtube_new.git # ссылка на репозиторий
+
+# как стягивать изменения?
+git pull

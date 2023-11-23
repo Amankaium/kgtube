@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
+{% load static %}
 {% load django_bootstrap5 %}
-
 
 {% block content %}
     <h1>{{ video.name }}</h1>
@@ -24,8 +24,18 @@
         <video width="500" controls src="{{ video.file_path.url }}">
         </video>
     </p>
+    <!-- Только для автора -->
     <a href="{% url 'video-update' video.id %}" class="btn btn-warning">Изменить</a>
     <a href="{% url 'video-delete' video.id %}" class="btn btn-danger">Удалить</a>
+    
+    <!-- Только для авторизованного -->
+    <div>
+        <form method="POST">
+            {% csrf_token %}
+            <button name="like"><span><img height="20px" src="{% static 'like.svg' %}" alt=""> {{ video.likes }}</span></a>
+        </form>
+    </div>
+    
     <hr>
     <h2>Комментарии</h2>
     {% if request.user.is_authenticated %}

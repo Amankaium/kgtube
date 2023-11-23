@@ -44,3 +44,14 @@ python manage.py createsuperuser
 # в core создаём папку templates
 # и в папку templates добавляем файл home.html
 
+
+# как заливать изменения?
+git add .
+git commit -m "some text" # тут описание изменения
+git push
+
+# как клонировать проект?
+git clone https://github.com/jaka00/kgtube_new.git # ссылка на репозиторий
+
+# как стягивать изменения?
+git pull
