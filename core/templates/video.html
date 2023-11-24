@@ -6,7 +6,11 @@
     <h1>{{ video.name }}</h1>
     {% if video.author %}
         <h2>Автор:
-            <a href="{% url 'profile-detail' video.author.profile.id %}">
+            <a href="
+                {% if video.author.profile %}
+                    {% url 'profile-detail' video.author.profile.id %}
+                {% endif %}
+            ">
                 {{ video.author.username }}
             </a>
         </h2>
@@ -47,6 +51,7 @@
                 <button name="dislike">
                     <span>
                         <img height="20px" src="{% static 'dislike.svg' %}" alt="">
+                        {{ video.dislikes.count }}
                     </span>
                 </button>
             </form>
