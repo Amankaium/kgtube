@@ -45,6 +45,8 @@ urlpatterns = [
     path('subscriber-add/<int:id>/', subscriber_add, name='subscriber-add'),
     path('subscriber-remove/<int:id>/', subscriber_remove, name='subscriber-remove'),
     path('registration/', registration, name="registration"),
+    path('sign-in/', sign_in, name="sign-in"),
+    path('sign-out/', sign_out, name="sign-out"),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

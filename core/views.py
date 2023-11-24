@@ -1,10 +1,11 @@
 from django.shortcuts import render, HttpResponse, redirect
 from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.db.models import Q
 from video.models import Video
 from .models import Profile
-from .forms import ProfileForm, UserCreateForm
+from .forms import *
 
 def registration(request):
     context = {}
@@ -19,6 +20,35 @@ def registration(request):
     context["registration_form"] = UserCreateForm()
     return render(request, "user/registration.html", context)
 
+
+def sign_in(request):
+    if request.method == "POST":
+        auth_form = UserAuthForm(request.POST)
+        if auth_form.is_valid():
+            # индентификация
+            user_object = authenticate(
+                username=request.POST["username"],
+                password=request.POST.get("password")
+            )
+            # авторизация
+            if user_object:
+                login(request, user_object)
+                messages.success(request, "Успешно авторизовано!")
+            else:
+                messages.error(request, "Неверный логин или пароль")
+        else:
+            # print(auth_form.errors)
+            messages.error(request, auth_form.errors)  
+            
+    return render(
+        request,
+        "user/sign_in.html",
+        {"auth_form": UserAuthForm()}
+    )
+
+def sign_out(request):
+    logout(request)
+    return redirect(homepage)
 
 # Create your views here.
 def homepage(request):
