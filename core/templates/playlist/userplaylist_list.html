@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>Все плейлисты</h2>
+    {% for object in userplaylist_list %}
+        <div>
+            <a href="{% url 'playlist-info' object.id %}">
+                {{ object.name }}
+            </a>
+        </div>
+    {% endfor %}
+{% endblock %}

@@ -6,6 +6,7 @@
         <img src="{{ profile_object.photo.url }}" alt="" height="250px">
         <h3>Подписчиков: {{ subscribers_qty }}</h3>
         <h3>Название канала: {{ profile_object.channel_name }}</h3>
+        <h3>Пользователь: {{ profile_object.user.username }}</h3>
     </div>
     {% if request.user == profile_object.user %}
         <a class="btn btn-warning" href="{% url 'profile-update' profile_object.id %}">Изменить</a>

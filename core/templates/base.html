@@ -31,9 +31,6 @@
               <a class="nav-link"href="/">Домой</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/videos/">Список видео</a>
-            </li>
-            <li class="nav-item">
               <a class="nav-link" href="/about/">О нас</a>
             </li>
             <li class="nav-item">
@@ -49,11 +46,23 @@
                   <li><a class="dropdown-item" href="{% url 'profile-create' %}">Добавить профиль</a></li>
                 </ul>
               </li>
+              
               {% if request.user.profile %}
                 <li class="nav-item">
                   <a class="nav-link" href="{% url 'profile-detail' request.user.profile.id %}">Мой профиль</a>
                 </li>
               {% endif %}
+              
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'sign-out' %}">Выход</a>
+              </li>
+            {% else %}
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'registration' %}">Регистрация</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'sign-in' %}">Вход</a>
+              </li>
             {% endif %}
           </ul>
           <form class="d-flex mx-1" action="/search/">
@@ -61,7 +70,15 @@
             <button class="btn btn-dark">Поиск</button>
           </form>
           <div>
-            <img src="{{ request.user.profile.photo.url }}" height="50px" alt="">
+            <img src="{{ request.user.profile.photo.url }}" height="40px" alt="">
+            <br>
+            <a
+              {% if request.user.profile %}
+                href="{% url 'profile-detail' request.user.profile.id %}"
+              {% endif %}
+              class="text-white">
+              {{ request.user.username }}
+            </a>
           </div>
         </div>
       </div>

@@ -25,9 +25,11 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', homepage),
-    path('about/', about_view),
+    path('', videos, name="home"),
+    path('about/', AboutView.as_view()),
+    path('team/', TeamView.as_view()),
     path('playlists/', playlists),
+    path('playlists-cbv/', PlayListView.as_view(), name='playlist-cbv'),
     # path('playlists/', views.playlists),
     path('playlist/<int:id>/', playlist_info, name='playlist-info'),
     path('playlist/add/', playlist_add, name='playlist-add'),
@@ -41,6 +43,7 @@ urlpatterns = [
     path('profile-create/', profile_create, name='profile-create'),
     path('profile/<int:id>/', profile_detail, name='profile-detail'),
     path('profile-update/<int:id>/', profile_update, name='profile-update'),
+    path('profile-update-cbv/<int:pk>/', ProfileUpdate.as_view(), name='profile-update-cbv'),
     path('profile-delete/<int:id>/', profile_delete, name='profile-delete'),
     path('subscriber-add/<int:id>/', subscriber_add, name='subscriber-add'),
     path('subscriber-remove/<int:id>/', subscriber_remove, name='subscriber-remove'),

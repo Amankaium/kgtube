@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, HttpResponse
 from django.contrib import messages
 from .models import *
 from .forms import CommentForm
@@ -7,12 +7,22 @@ from .forms import CommentForm
 def videos(request):
     videos_list = Video.objects.all()
     context = {"videos_list": videos_list}
-    return render(request, 'videos.html', context)
+    return render(
+        request,
+        'videos.html',
+        context
+    )
 
 def video(request, id):
     # 7
     # SELECT * FROM video_video WHERE id = 7;
-    video_object = Video.objects.get(id=id)
+    if request.method == 'POST':
+        if not request.user.is_authenticated:
+            return HttpResponse('Вы не авторизованы', status=401)
+    try:
+        video_object = Video.objects.get(id=id)
+    except:
+        return HttpResponse("Не найдено", status=404)
     context = {}
     if request.user.is_authenticated:
         video_view, created = VideoView.objects.get_or_create(

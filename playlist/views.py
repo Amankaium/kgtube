@@ -1,20 +1,22 @@
 from django.shortcuts import render, redirect
+from django.views.generic import ListView
 from .models import UserPlayList
 from .forms import PlayListForm
 
 # Create your views here.
 def playlists(request):
-    # SELECT * FROM UserPlayList;
     query_result = UserPlayList.objects.all()
-
-    # query_result является списком 
     context = {"objects_list": query_result}
-
     return render(
         request,
         'playlists.html',
         context
     )
+
+
+class PlayListView(ListView):
+    model = UserPlayList
+
 
 def playlist_info(request, id):
     playlist_object = UserPlayList.objects.get(id=id)
