@@ -35,7 +35,7 @@ urlpatterns = [
     path('playlist/add/', playlist_add, name='playlist-add'),
     path('playlist-df/add/', playlist_df_add, name='playlist-df-add'),
     path('videos/', videos),
-    path('video/<int:id>/', video),
+    path('video/<int:id>/', video, name='video-detail'),
     path('video-update/<int:id>/', video_update, name='video-update'),
     path('video-update-cbv/<int:pk>/', VideoUpdate.as_view(), name='video-update-cbv'),
     path('video-delete/<int:id>/', video_delete, name='video-delete'),
