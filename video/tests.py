@@ -1,7 +1,7 @@
 from django.test import TestCase
 from django.urls import reverse_lazy
 from .models import Video
-from .factories import VideoFactory
+from .factories import *
 
 # Create your tests here.
 class TestVideoDetail(TestCase):
@@ -25,7 +25,12 @@ class TestVideoDetail(TestCase):
 class TestVideoList(TestCase):
     def test_video_list_should_success(self):
         for i in range(3):
-            VideoFactory(name=f"test video number {i}")
+            video_obj = VideoFactory(name=f"test video number {i}")
+
+        profile = ProfileFactory(
+            user=video_obj.author
+        )
+        
         response = self.client.get(reverse_lazy('home'))
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "test video number 0")

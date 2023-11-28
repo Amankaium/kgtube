@@ -1,6 +1,7 @@
 import factory
 from django.contrib.auth.models import User
 from .models import Video
+from core.models import Profile
 
 
 class UserFactory(factory.django.DjangoModelFactory):
@@ -9,6 +10,13 @@ class UserFactory(factory.django.DjangoModelFactory):
         django_get_or_create = ('username',)
 
     username = 'test_user_1'
+
+
+class ProfileFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = Profile
+    channel_name = 'test channel'
+    user = factory.SubFactory(UserFactory)
 
 
 class VideoFactory(factory.django.DjangoModelFactory):
