@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect, HttpResponse
 from django.contrib import messages
+from django.views import View
 from .models import *
-from .forms import CommentForm
+from .forms import *
 
 
 def videos(request):
@@ -86,3 +87,32 @@ def video_delete(request, id):
     video_object = Video.objects.get(id=id)
     video_object.delete()
     return redirect(videos)
+
+
+class VideoUpdate(View):
+    # read
+    def get(self, request, *args, **kwargs):
+        context = {}
+        video_object = Video.objects.get(id=kwargs.get("pk"))
+        video_form = VideoForm(
+            instance=video_object,
+        )
+        context["video_form"] = video_form
+        return render(request, "video_update_cbv.html", context)
+
+    # update
+    def post(self, request, *args, **kwargs):
+        video_object = Video.objects.get(id=kwargs.get("pk"))
+        if request.user == video_object.author:
+            video_form = VideoForm(
+                instance=video_object,
+                data=request.POST
+            )
+            if video_form.is_valid():
+                video_form.save()
+                messages.success(request, "Видео успешно обновлено!")
+                return redirect("video-update-cbv", pk=video_object.id)
+            else:
+                return HttpResponse("Данные не валидны", status=400)
+        else:
+            return HttpResponse("Нет доступа", status=403)
