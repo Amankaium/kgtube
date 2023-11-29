@@ -36,3 +36,22 @@ class TestVideoList(TestCase):
         self.assertContains(response, "test video number 0")
         self.assertContains(response, "test video number 1")
         self.assertContains(response, "test video number 2")
+
+
+class TestComment(TestCase):
+    def test_comments_in_video_should_exist(self):
+        video_object = VideoFactory()
+
+        text_comments = []
+        for i in range(3):
+            new_comment = CommentFactory(
+                video=video_object
+            )
+            text_comments.append(new_comment.txt)
+        
+        response = self.client.get(f'/video/{video_object.id}/')
+        self.assertEqual(response.status_code, 200)
+
+        for i in range(3):
+            # print(text_comments[i])
+            self.assertContains(response, text_comments[i])
