@@ -1,9 +1,23 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load django_bootstrap5 %}
 
 {% block content %}
+    <p>
+        <button class="btn btn-info" data-bs-toggle="collapse" data-bs-target="#demo">Фильтр</button>
+    </p>
+    <div id="demo" class="collapse">
+        <form>
+            {% bootstrap_form filter_object.form %}
+            <p>
+                <button class="btn btn-primary">Применить</button>
+            </p>
+        </form>
+    </div>
+    
+
     <div class="row">
-        {% for video in videos_list  %}
+        {% for video in filter_object.qs %}
             <div class="col-lg-4 col-md-6 col-sm-12">
                 <a href="/video/{{ video.id }}/">
                     <video width="95%">
